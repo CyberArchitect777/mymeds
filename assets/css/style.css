@@ -17,13 +17,26 @@ header, nav {
     color: white;
 }
 
-header .nav-link, header .nav-brand {
+header .nav-link, header .navbar-brand {
     color: white;
 }
 
-.nav-link:focus, .nav-link:focus, .nav-link:focus-visible {
+.active {
     text-decoration: underline;
+}
+
+.navbar-toggler {
     color: white;
+    border-color: white; 
+}
+
+.navbar-toggler-icon {
+    /* Provides an icon for the navbar on mobile view */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-collapse {
+    text-align: center;
 }
 
 /* Footer styles */
