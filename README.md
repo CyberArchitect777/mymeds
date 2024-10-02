@@ -9,7 +9,9 @@ MyMeds is a medication tracker site designed to allow people to keep track of th
 
 ## Deployment And Repository
 
-A deployment and GitHub page for this project is not yet available. These will be available shortly.
+The deployed website can be found [here](https://mymeds-ae895ce9ccba.herokuapp.com/)
+
+The GitHub repository is [here](https://github.com/CyberArchitect777/mymeds)
 
 ## Technical
 
