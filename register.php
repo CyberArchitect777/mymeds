@@ -5,13 +5,13 @@ include "base-top.php";
     <main>
         <h1 class="main-text">Register</h1>
         <p class="main-text">Please register for a new account using the form below.</p>
-        <form id="register" action="register-process.php">
+        <form id="register" method="POST" action="register-process.php">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="password"></input>
+            <input type="text" id="username" name="username">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password"></input>
+            <input type="password" id="password" name="password">
             <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password"></input>
+            <input type="password" id="confirm-password" name="confirm-password">
             <div class="d-flex justify-content-center mt-5">
                 <input class="blue-button me-4" type="submit" value="OK">
                 <input class="blue-button ms-4" type="reset">
