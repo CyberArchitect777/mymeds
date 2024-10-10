@@ -10,12 +10,12 @@ try {
             $new_password = $_POST["password"];
 
             // Database connection variables
-            $database_host = getenv("DB_HOST");
+            $database_dsn = getenv("DB_DSN");
             $database_username = getenv("DB_USER");
             $database_password = getenv("DB_PASSWORD");
 
             // Create a PHP data object for the database)
-            $pdo = new PDO($database_host, $database_username, $database_password);
+            $pdo = new PDO($database_dsn, $database_username, $database_password);
 
             // Set error mode to exception to handle errors properly
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -28,8 +28,8 @@ try {
             $query_outcome = $pdo->query($sql_query);
 
             // Fetch and display the results
-            while ($row = $query_outcome->fetch(mode: PDO::FETCH_ASSOC)) {
-                echo "<p>Name: " . $row['name'] . "<br><p>";
+            while ($row = $query_outcome->fetch(PDO::FETCH_ASSOC)) {
+                echo "<p>Username: " . $row['username'] . "<br><p>";
             }
         }
         else {
