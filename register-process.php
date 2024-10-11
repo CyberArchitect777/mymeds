@@ -25,7 +25,7 @@ try {
             $confirm_password = $_POST["confirm-password"];
 
             if ($new_password !== $confirm_password) {
-                echo "<p id="register-alert">Password don't match. Please try again</p>";
+                echo "<p id='register-alert'>Password don't match. Please try again</p>";
                 include "register.php";
             } else {
                 
@@ -36,8 +36,7 @@ try {
             
                 // Execute query
                 $username_outcome = $pdo->query($username_checks);
-
-                
+   
             }
 
             // Fetch and display the results
