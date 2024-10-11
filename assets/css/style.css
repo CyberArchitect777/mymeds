@@ -82,6 +82,14 @@ header .nav-link, header .navbar-brand {
     width: 100%;
 }
 
+#register-alert {
+    display: none;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
 /* Footer styles */
 
 footer {
