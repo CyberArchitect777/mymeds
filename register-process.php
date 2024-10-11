@@ -31,8 +31,17 @@ try {
                 
                 // Check if username doesn't already exist
                 
-                $username_check = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+                $username_check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
                 $username_check->execute(["username" => $new_username]);
+                $username_count = $username_check->fetchColumn();
+
+                if ($username_count > 0) {
+                    echo "<p id='register-alert'>Username already exists</p>";
+                    include "register.php";
+                } else {
+                    $insert_query = $pdo->prepare("INSERT INTO users ('username', 'password') VALUES (:new_username, :new_password");
+                    $insert_query->execute( ["new_username"=> $new_username, "new_password" => $new_password]);
+                }
             
                 // Execute query
                 $username_outcome = $pdo->query($username_checks);
