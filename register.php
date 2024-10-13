@@ -2,6 +2,7 @@
 $pagename = "register";
 include "base-top.php"; 
 include "register-alert.html";
+
 ?>
 
 <h1 class="main-text">Register</h1>

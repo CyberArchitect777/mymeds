@@ -1,6 +1,7 @@
 <?php
 
 include "base-top.php";
+include "errorlog.php";
 
 try {
 
@@ -25,7 +26,7 @@ try {
             $confirm_password = $_POST["confirm-password"];
 
             if ($new_password !== $confirm_password) {
-                echo "<p id='register-alert'>Password don't match. Please try again</p>";
+                echo "<p id='register-alert'>Passwords don't match. Please try again</p>";
                 include "register.php";
             } else {
                 
@@ -41,16 +42,8 @@ try {
                 } else {
                     $insert_query = $pdo->prepare("INSERT INTO users ('username', 'password') VALUES (:new_username, :new_password");
                     $insert_query->execute( ["new_username"=> $new_username, "new_password" => $new_password]);
-                }
-            
-                // Execute query
-                $username_outcome = $pdo->query($username_checks);
-   
-            }
-
-            // Fetch and display the results
-            while ($row = $query_outcome->fetch(PDO::FETCH_ASSOC)) {
-                echo "<p>Username: " . $row['username'] . "<br><p>";
+                    echo "<p>New user account created</p>";
+                }   
             }
         }
         else {
