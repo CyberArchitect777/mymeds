@@ -1,8 +1,4 @@
 
-document.addEventListener("submit", function(event) {
-    event.preventDefault();
-});
-
 function registerFormCheck() {
     let passwordOne = document.getElementById("password");
     let passwordTwo = document.getElementById("confirm-password");
