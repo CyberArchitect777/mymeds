@@ -8,7 +8,9 @@ function registerFormCheck() {
         registerAlert.innerText = "Passwords don't match. Please try again";
         return false;
     } else {
-        registerAlert.style.display = "none";
-        return true;
+        registerAlert.style.display = "block";
+        registerAlert.innerText = "Form validation fine but submission blocked. Development ongoing";
+        registerAlert.style.display = "block";
+        return false;
     }
 }

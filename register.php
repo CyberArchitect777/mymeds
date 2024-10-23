@@ -7,7 +7,7 @@ include "register-alert.html";
 
 <h1 class="main-text">Register</h1>
 <p class="main-text">Please register for a new account using the form below.</p>
-<form id="register" onsubmit="registerFormCheck()" method="POST" action="register-process.php">
+<form id="register" onsubmit="return registerFormCheck()" method="POST" action="register-process.php">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
     <label for="password">Password:</label>
