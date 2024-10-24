@@ -11,6 +11,6 @@ function registerFormCheck() {
         registerAlert.style.display = "block";
         registerAlert.innerText = "Form validation fine but submission blocked. Development ongoing";
         registerAlert.style.display = "block";
-        return false;
+        return true;
     }
 }
