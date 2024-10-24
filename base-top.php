@@ -26,7 +26,7 @@
                             <a class="nav-link <?php if ($pagename === 'index') { echo 'active'; } ?>" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php if ($pagename === 'login') { echo 'active'; } ?>" href="#">Login</a>
+                            <a class="nav-link <?php if ($pagename === 'login') { echo 'active'; } ?>" href="login.php">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?php if ($pagename === 'register') { echo 'active'; } ?>" href="register.php">Register</a>
