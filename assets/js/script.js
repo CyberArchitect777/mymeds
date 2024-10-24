@@ -4,13 +4,11 @@ function registerFormCheck() {
     let passwordTwo = document.getElementById("confirm-password");
     let registerAlert = document.getElementById("register-alert");
     if (passwordOne.value !== passwordTwo.value) {
-        registerAlert.style.display = "block";
+        registerAlert.classlist.remove("hide");
         registerAlert.innerText = "Passwords don't match. Please try again";
         return false;
     } else {
-        registerAlert.style.display = "block";
-        registerAlert.innerText = "Form validation fine but submission blocked. Development ongoing";
-        registerAlert.style.display = "block";
+        registerAlert.classlist.add("hide");
         return true;
     }
 }

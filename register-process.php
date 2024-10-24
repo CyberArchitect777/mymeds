@@ -23,11 +23,11 @@ try {
         if (isset($_POST["username"])) {
             $new_username = $_POST["username"];
             $new_password = $_POST["password"];
+            
             $confirm_password = $_POST["confirm-password"];
-
             if ($new_password !== $confirm_password) {
                 echo "<p id='register-alert'>Passwords don't match. Please try again</p>";
-                include "register.php";
+                include "register-section.php";
             } else {
                 
                 // Check if username doesn't already exist
@@ -37,12 +37,12 @@ try {
                 $username_count = $username_check->fetchColumn();
 
                 if ($username_count > 0) {
-                    echo "<p id='register-alert'>Username already exists</p>";
-                    include "register.php";
+                    echo "<p class='text-white' id='register-alert'>Username already exists</p>";
+                    include "register-section.php";
                 } else {
-                    $insert_query = $pdo->prepare("INSERT INTO users ('username', 'password') VALUES (:new_username, :new_password");
+                    $insert_query = $pdo->prepare("INSERT INTO users (username, password) VALUES (:new_username, :new_password);");
                     $insert_query->execute( ["new_username"=> $new_username, "new_password" => $new_password]);
-                    echo "<p>New user account created</p>";
+                    echo "<p class='text-white'>New user account created</p>";
                 }   
             }
         }
