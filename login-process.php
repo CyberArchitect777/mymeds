@@ -45,6 +45,8 @@ try {
                     $new_password_hash = password_hash($passed_password, PASSWORD_DEFAULT);
                     $insert_query = $pdo->prepare("UPDATE users SET password = :passed_password WHERE username = :passed_username;");
                     $insert_query->execute( ["passed_username"=> $passed_username, "passed_password" => $passed_password]);
+                    session_start();
+                    $_SESSION['username'] = $passed_username;
                 }  
             } else {
                 echo "<p class='text-white'>Incorrect login details</p>";
