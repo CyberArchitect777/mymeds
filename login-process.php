@@ -40,6 +40,12 @@ try {
 
             if (password_verify($passed_password, $password_hash )) {
                 echo "<p class='text-white'>Correct user account detected</p>";
+                // Re-hash password with new default algorithm if it's needed
+                if (password_needs_rehash($password_hash, PASSWORD_DEFAULT)) {
+                    $new_password_hash = password_hash($passed_password, PASSWORD_DEFAULT);
+                    $insert_query = $pdo->prepare("UPDATE users SET password = :passed_password WHERE username = :passed_username;");
+                    $insert_query->execute( ["passed_username"=> $passed_username, "passed_password" => $passed_password]);
+                }  
             } else {
                 echo "<p class='text-white'>Incorrect login details</p>";
             }
