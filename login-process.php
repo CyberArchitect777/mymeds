@@ -24,23 +24,25 @@ try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (! isset($_POST["username"]) || ! isset($_POST["password"])) {
-            $error_code = 1; 
+            $error_code = 1;
         }
         else {
             $passed_username = $_POST["username"];
             $passed_password = $_POST["password"];
             
+            // Pull the password for this user account from the database
+
+            $account_pull = $pdo->prepare("SELECT password FROM users WHERE username = :passed_username");  
+            $account_pull->execute(["passed_username" => $passed_username]);
+            $password_hash = $account_pull->fetchColumn();
+
             // Check if login information given matches what is in the database
 
-            $login_check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :passed_username AND password = :passed_password");
-            $login_check->execute(["passed_username" => $passed_username, "passed_password" => $passed_password]);
-            $login_count = $login_check->fetchColumn();
-
-            if ($login_count > 0) {
+            if (password_verify($passed_password, $password_hash )) {
                 echo "<p class='text-white'>Correct user account detected</p>";
             } else {
                 echo "<p class='text-white'>Incorrect login details</p>";
-            }   
+            }
         }
     }
     else {
