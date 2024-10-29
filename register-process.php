@@ -40,8 +40,10 @@ try {
                     echo "<p class='text-white' id='register-alert'>Username already exists</p>";
                     include "register-section.php";
                 } else {
-                    $insert_query = $pdo->prepare("INSERT INTO users (username, password) VALUES (:new_username, :new_password);");
-                    $insert_query->execute( ["new_username"=> $new_username, "new_password" => $new_password]);
+                    #PASSWORD_DEFAULT selects the most up to date hashing algorithm
+                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT); 
+                    $insert_query = $pdo->prepare("INSERT INTO users (username, password) VALUES (:new_username, :hashed_password);");
+                    $insert_query->execute( ["new_username"=> $new_username, "hashed_password" => $hashed_password]);
                     echo "<p class='text-white'>New user account created</p>";
                 }   
             }
