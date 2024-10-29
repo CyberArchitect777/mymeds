@@ -25,12 +25,21 @@
                         <li class="nav-item">
                             <a class="nav-link <?php if ($pagename === 'index') { echo 'active'; } ?>" aria-current="page" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php if ($pagename === 'login') { echo 'active'; } ?>" href="login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php if ($pagename === 'register') { echo 'active'; } ?>" href="register.php">Register</a>
-                        </li>
+                        <?php
+                        if (isset($_SESSION["user_id"]) == false) {
+                            echo '
+                            <li class="nav-item">
+                                <a class="nav-link ' . ($pagename === "login" ? "active" : "") . '" href="login.php">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link ' . ($pagename === "register" ? "active" : "") . '" href="register.php">Register</a>
+                            </li>';
+                        } else {
+                            echo '
+                            <li class="nav-item">
+                                <a class="nav-link ' . ($pagename === "logout" ? "active" : "") . '" href="#">Logout</a>
+                            </li>';
+                        } ?> 
                     </ul>
                 </div>
             </div>

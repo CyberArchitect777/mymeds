@@ -63,6 +63,8 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
+$pagename = "login";
+
 include "base-top.php";
 
 echo $message;
