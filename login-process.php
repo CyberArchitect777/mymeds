@@ -65,10 +65,10 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-$pagename = "login";
+$pagename = "medhub";
 
 include "base-top.php";
 
-echo $message;
+include "medhub-section.php";
 
 include "base-bottom.php";

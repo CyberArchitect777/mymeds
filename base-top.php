@@ -37,6 +37,9 @@
                         } else {
                             echo '
                             <li class="nav-item">
+                                <a class="nav-link ' . ($pagename === "medhub" ? "active" : "") . '" href="medhub.php">MedHub</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link ' . ($pagename === "logout" ? "active" : "") . '" href="logout.php">Logout</a>
                             </li>';
                         } ?> 

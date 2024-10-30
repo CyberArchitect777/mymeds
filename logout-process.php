@@ -5,10 +5,10 @@ include "session-code.php";
 session_unset(); // Unsets all session variables
 session_destroy(); // Ends the user session
 
-$pagename = "logout";
+$pagename = "index";
 
 include "base-top.php";
 
-echo "You have been logged out";
+include "index-section.php";
 
 include "base-bottom.php";
