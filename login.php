@@ -1,4 +1,5 @@
 <?php 
+include "session-code.php";
 $pagename = "login";
 include "base-top.php";
 ?>

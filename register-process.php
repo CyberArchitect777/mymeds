@@ -1,5 +1,6 @@
 <?php
 
+include "session-code.php";
 include "base-top.php";
 include "errorlog.php";
 

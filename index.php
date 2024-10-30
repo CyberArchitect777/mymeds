@@ -1,5 +1,7 @@
 <?php
 
+include "session-code.php";
+
 // Ensure errors are not displayed on the page, but can be seen in logs
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);

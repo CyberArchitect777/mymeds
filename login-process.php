@@ -1,5 +1,7 @@
 <?php
 
+include "session-code.php";
+
 try {
 
     // Connect to the database

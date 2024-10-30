@@ -1,4 +1,5 @@
 <?php 
+include "session-code.php";
 include "base-top.php"; 
 include "register-alert.html";
 include "register-section.php";
