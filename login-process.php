@@ -50,7 +50,6 @@ try {
                     $insert_query = $pdo->prepare("UPDATE users SET password = :passed_password WHERE username = :passed_username;");
                     $insert_query->execute( ["passed_username"=> $passed_username, "passed_password" => $passed_password]);
                 }
-                session_start();
                 $_SESSION["user_id"] = $user_id;
                 $message = "<p class='text-white'>Correct user account detected: " . (string)$user_id . "</p>";
             } else {

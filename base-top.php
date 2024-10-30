@@ -37,7 +37,7 @@
                         } else {
                             echo '
                             <li class="nav-item">
-                                <a class="nav-link ' . ($pagename === "logout" ? "active" : "") . '" href="#">Logout</a>
+                                <a class="nav-link ' . ($pagename === "logout" ? "active" : "") . '" href="logout.php">Logout</a>
                             </li>';
                         } ?> 
                     </ul>
