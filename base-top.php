@@ -44,5 +44,14 @@
                 </div>
             </div>
         </nav>
+        <div class="d-flex justify-content-center">
+            <?php
+            if (isset($_SESSION["user_id"]) == false) {
+                echo "<p>Not logged in</p>";
+            } else {
+                echo "<p>Signed in as " . $_SESSION["username"] . "</p>";
+            }
+            ?>
+        </div>
     </header>
     <main>

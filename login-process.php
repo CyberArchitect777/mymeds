@@ -51,6 +51,7 @@ try {
                     $insert_query->execute( ["passed_username"=> $passed_username, "passed_password" => $passed_password]);
                 }
                 $_SESSION["user_id"] = $user_id;
+                $_SESSION["username"] = $passed_username;
                 $message = "<p class='text-white'>Correct user account detected: " . (string)$user_id . "</p>";
             } else {
                 $message = "<p class='text-white'>Incorrect login details</p>";
