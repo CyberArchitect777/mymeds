@@ -1,9 +1,9 @@
 <?php
 
+include "session-code.php";
+
 session_unset(); // Unsets all session variables
 session_destroy(); // Ends the user session
-
-include "session-code.php";
 
 $pagename = "logout";
 
