@@ -49,6 +49,10 @@ header .nav-link, header .navbar-brand {
     text-align: center;
 }
 
+#login-status {
+    height: 28px;
+}
+
 /* Index styles */
 
 .main-text {

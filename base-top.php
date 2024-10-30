@@ -47,7 +47,7 @@
                 </div>
             </div>
         </nav>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center align-items-center" id="login-status">
             <?php
             if (isset($_SESSION["user_id"]) == false) {
                 echo "<p>Not logged in</p>";
