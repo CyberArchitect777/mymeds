@@ -29,6 +29,10 @@ form {
     width: 200px;
 }
 
+input[type="submit"], input[type="reset"] {
+    border: 0;
+}
+
 /* Utility classes */
 
 .hide {
