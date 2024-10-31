@@ -14,6 +14,21 @@ form {
     max-width: 500px;
 }
 
+.blue-button {
+    background-color: darkblue;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    text-decoration: none;
+    height: 50px;
+}
+
+.large-button {
+    width: 200px;
+}
+
 /* Utility classes */
 
 .hide {
@@ -63,17 +78,6 @@ header .nav-link, header .navbar-brand {
     color: white;
     text-align: center;
     margin-top: 48px;
-}
-
-.blue-button {
-    background-color: darkblue;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    text-decoration: none;
-    height: 50px;
 }
 
 .blue-button:hover {
