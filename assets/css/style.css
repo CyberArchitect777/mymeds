@@ -115,6 +115,14 @@ header .nav-link, header .navbar-brand {
     text-align: center;
 }
 
+/* MedHub styles */
+
+.rowdata {
+    color: white;
+    text-align: center;
+    list-style: none;
+}
+
 /* Footer styles */
 
 footer {

@@ -29,13 +29,13 @@ try {
         $drugs_output = '<p class="main-text">No medication is on record</p>';
     } else {
         $drugs_output = "<ul>";
-        $drugs_output += "<li>" . $first_row['medication_name'] . " - " . (string)$first_row["dosage"] . "</li>";
-        while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) {   
+        $drugs_output .= "<li class='rowdata'>" . $first_row["medication_name"] . " - " . $first_row["dosage"] . "</li>";
+        while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) {
             $medication_name = $more_rows['medication_name'];
             $medication_dosage = $more_rows['dosage'];
-            $drugs_output += "<li>" . $medication_name . " - " . (string)$medication_dosage . "</li>";
+            $drugs_output .= "<li class='rowdata'>" . $medication_name . " - " . $medication_dosage . "</li>";
         }
-        $drugs_output = "</ul>";
+        $drugs_output .= "</ul>";
     }
     
 } catch (PDOException $e) {
@@ -51,6 +51,6 @@ try {
         <div class="d-flex justify-content-center align-items-center">
             <a class="d-flex justify-content-center align-items-center blue-button large-button" href="addmed.php">Add Medication</a>
         </div>
-        <?php echo $drugs_output ?>
+        <?php echo $drugs_output; ?>
     </section>
 </main>

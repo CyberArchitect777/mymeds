@@ -14,7 +14,7 @@ include "base-top.php";
     <label for="frequency-number">Taken Every:</label>
     <div id="frequency" class="d-flex">
         <input type="text" id="frequency-number" class="me-2" name="frequency-number" required>
-        <select id="frequency-type" name="frequencytype">
+        <select id="frequency-type" name="frequency-type">
             <option value="0" selected>Hours(s)</option>
             <option value="1">Day(s)</option>
             <option value="2">Week(s)</option>
