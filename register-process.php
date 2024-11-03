@@ -68,13 +68,8 @@ try {
         } else {
             redirectToIndex();
         }
-        else {
-            redirectToIndex();
-        }
-    }
-    else {
-        include "base-top.php";
-        echo "<p>No form data detected</p>";
+    } else {
+        redirectToIndex();
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
