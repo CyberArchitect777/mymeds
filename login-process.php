@@ -1,6 +1,7 @@
 <?php
 
 include "session-code.php";
+include "utility.php";
 
 try {
 
@@ -24,42 +25,45 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        if (! isset($_POST["username"]) || ! isset($_POST["password"])) {
-            $error_code = 1;
-        }
-        else {
-            $passed_username = $_POST["username"];
-            $passed_password = $_POST["password"];
-            
-            // Pull the password for this user account from the database
-
-            $account_pull = $pdo->prepare("SELECT user_id, password FROM users WHERE username = :passed_username");  
-            $account_pull->execute(["passed_username" => $passed_username]);
-
-            while ($row = $account_pull->fetch(PDO::FETCH_ASSOC)) {
-                $password_hash = $row['password'];
-                $user_id = $row['user_id'];
+        if ($_POST["token"] == $_SESSION["login-token"]) {
+            if (! isset($_POST["username"]) || ! isset($_POST["password"])) {
+                $error_code = 1;
             }
+            else {
+                $passed_username = $_POST["username"];
+                $passed_password = $_POST["password"];
+                
+                // Pull the password for this user account from the database
 
-            // Check if login information given matches what is in the database
+                $account_pull = $pdo->prepare("SELECT user_id, password FROM users WHERE username = :passed_username");  
+                $account_pull->execute(["passed_username" => $passed_username]);
 
-            if (password_verify($passed_password, $password_hash )) {
-                // Re-hash password with new default algorithm if it's needed
-                if (password_needs_rehash($password_hash, PASSWORD_DEFAULT)) {
-                    $new_password_hash = password_hash($passed_password, PASSWORD_DEFAULT);
-                    $insert_query = $pdo->prepare("UPDATE users SET password = :passed_password WHERE username = :passed_username;");
-                    $insert_query->execute( ["passed_username"=> $passed_username, "passed_password" => $passed_password]);
+                while ($row = $account_pull->fetch(PDO::FETCH_ASSOC)) {
+                    $password_hash = $row['password'];
+                    $user_id = $row['user_id'];
                 }
-                $_SESSION["user_id"] = $user_id;
-                $_SESSION["username"] = $passed_username;
-            } else {
-                $message = "<p class='text-white'>Incorrect login details</p>";
+
+                // Check if login information given matches what is in the database
+
+                if (password_verify($passed_password, $password_hash )) {
+                    // Re-hash password with new default algorithm if it's needed
+                    if (password_needs_rehash($password_hash, PASSWORD_DEFAULT)) {
+                        $new_password_hash = password_hash($passed_password, PASSWORD_DEFAULT);
+                        $insert_query = $pdo->prepare("UPDATE users SET password = :passed_password WHERE username = :passed_username;");
+                        $insert_query->execute( ["passed_username"=> $passed_username, "passed_password" => $passed_password]);
+                    }
+                    $_SESSION["user_id"] = $user_id;
+                    $_SESSION["username"] = $passed_username;
+                } else {
+                    $message = "<p class='text-white'>Incorrect login details</p>";
+                }
             }
+        } else {
+            redirectToIndex();
         }
     }
     else {
-        header("Location: index.php");
-        exit();
+        redirectToIndex();
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
