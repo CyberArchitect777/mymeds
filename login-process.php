@@ -52,7 +52,6 @@ try {
                 }
                 $_SESSION["user_id"] = $user_id;
                 $_SESSION["username"] = $passed_username;
-                $message = "<p class='text-white'>Correct user account detected: " . (string)$user_id . "</p>";
             } else {
                 $message = "<p class='text-white'>Incorrect login details</p>";
             }
@@ -69,6 +68,11 @@ $pagename = "medhub";
 
 include "base-top.php";
 
-include "medhub-section.php";
-
+if (isset($_SESSION["user_id"])) {
+    include "medhub-section.php";
+} else {
+    echo '<p id="register-alert">Incorrect username/password entered</p>';
+    include "login-section.php";
+}
+ 
 include "base-bottom.php";
