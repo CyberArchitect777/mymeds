@@ -1,6 +1,7 @@
 <?php
 
 include "session-code.php";
+include "utility.php";
 
 try {
 
@@ -18,19 +19,21 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $med_name = $_POST["medname"];
-        $med_dosage = $_POST["dosage"];
-        $frequency_number = $_POST["frequency-number"];
-        $frequency_type = $_POST["frequency-type"];
-            
-        // Pull the password for this user account from the database
+        if ($_POST["token"] == $_SESSION["addmed-token"]) {
+            $med_name = $_POST["medname"];
+            $med_dosage = $_POST["dosage"];
+            $frequency_number = $_POST["frequency-number"];
+            $frequency_type = $_POST["frequency-type"];
+                
+            // Pull the password for this user account from the database
 
-        $medication_add = $pdo->prepare("INSERT INTO medication (medication_name, dosage, user_id, frequency_type, frequency_number) VALUES (:medname, :med_dosage, :user_id, :frequency_number, :frequency_type);");
-        $medication_add->execute(["medname" => $med_name, "med_dosage" => $med_dosage, "user_id" => $_SESSION["user_id"], "frequency_number" => $frequency_number, "frequency_type" => $frequency_type]);
-    }
-    else {
-        header("Location: index.php");
-        exit();
+            $medication_add = $pdo->prepare("INSERT INTO medication (medication_name, dosage, user_id, frequency_type, frequency_number) VALUES (:medname, :med_dosage, :user_id, :frequency_number, :frequency_type);");
+            $medication_add->execute(["medname" => $med_name, "med_dosage" => $med_dosage, "user_id" => $_SESSION["user_id"], "frequency_number" => $frequency_number, "frequency_type" => $frequency_type]);
+        } else {
+            redirectToIndex();
+        }
+    } else {
+        redirectToIndex();
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
