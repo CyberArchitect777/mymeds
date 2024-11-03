@@ -29,7 +29,8 @@ try {
         $medication_add->execute(["medname" => $med_name, "med_dosage" => $med_dosage, "user_id" => $_SESSION["user_id"], "frequency_number" => $frequency_number, "frequency_type" => $frequency_type]);
     }
     else {
-        echo "<p>No form data detected</p>";
+        header("Location: index.php");
+        exit();
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();

@@ -66,8 +66,8 @@ try {
             }
         }
         else {
-            include "base-top.php";
-            echo "<p>Username field missing</p>";
+            header("Location: index.php");
+            exit();
         }
     }
     else {
