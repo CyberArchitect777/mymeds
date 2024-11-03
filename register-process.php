@@ -2,7 +2,7 @@
 
 $pagename = "register";
 include "session-code.php";
-include "errorlog.php";
+include "utility.php";
 
 try {
 
@@ -24,50 +24,52 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-        if (isset($_POST["username"])) {
-            $new_username = $_POST["username"];
-            $new_password = $_POST["password"];
-            
-            $confirm_password = $_POST["confirm-password"];
-            if ($new_password !== $confirm_password) {
-                include "base-top.php";
-                echo "<p id='register-alert'>Passwords don't match. Please try again</p>";
-                include "register-section.php";
-            } else {
+        if ($_POST["token"] == $_SESSION["register-token"]) {
+            if (isset($_POST["username"])) {
+                $new_username = $_POST["username"];
+                $new_password = $_POST["password"];
                 
-                // Check if username doesn't already exist
-                
-                $username_check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
-                $username_check->execute(["username" => $new_username]);
-                $username_count = $username_check->fetchColumn();
-
-                if ($username_count > 0) {
+                $confirm_password = $_POST["confirm-password"];
+                if ($new_password !== $confirm_password) {
                     include "base-top.php";
-                    echo "<p class='text-white' id='register-alert'>Username already exists</p>";
+                    echo "<p id='register-alert'>Passwords don't match. Please try again</p>";
                     include "register-section.php";
                 } else {
-                    #PASSWORD_DEFAULT selects the most up to date hashing algorithm
-                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT); 
-                    $insert_query = $pdo->prepare("INSERT INTO users (username, password) VALUES (:new_username, :hashed_password);");
-                    $insert_query->execute( ["new_username"=> $new_username, "hashed_password" => $hashed_password]);
-                    $retrieve_userid = $pdo->prepare("SELECT user_id FROM users WHERE username = :username;");
-                    $retrieve_userid->execute( ["username"=> $new_username]);
-                    $userid = $retrieve_userid->fetchColumn(); // fetchColumn() gets the first column of the first row
-                    $_SESSION["user_id"] = $userid;
-                    $_SESSION["username"] = $new_username;
-                    include "base-top.php";
-                    echo '<h1 class="main-text">Registration Complete</h1>';
-                    echo '<p class="main-text">Welcome to your new account. Please click the button below to access the MedHub</p>';
-                    echo '<section class="d-flex justify-content-center mt-5">';
-                    echo '<a class="blue-button me-3" href="medhub.php">MedHub</a>';
-                    echo '</section>';
-                }   
+                    
+                    // Check if username doesn't already exist
+                    
+                    $username_check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
+                    $username_check->execute(["username" => $new_username]);
+                    $username_count = $username_check->fetchColumn();
+
+                    if ($username_count > 0) {
+                        include "base-top.php";
+                        echo "<p class='text-white' id='register-alert'>Username already exists</p>";
+                        include "register-section.php";
+                    } else {
+                        #PASSWORD_DEFAULT selects the most up to date hashing algorithm
+                        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT); 
+                        $insert_query = $pdo->prepare("INSERT INTO users (username, password) VALUES (:new_username, :hashed_password);");
+                        $insert_query->execute( ["new_username"=> $new_username, "hashed_password" => $hashed_password]);
+                        $retrieve_userid = $pdo->prepare("SELECT user_id FROM users WHERE username = :username;");
+                        $retrieve_userid->execute( ["username"=> $new_username]);
+                        $userid = $retrieve_userid->fetchColumn(); // fetchColumn() gets the first column of the first row
+                        $_SESSION["user_id"] = $userid;
+                        $_SESSION["username"] = $new_username;
+                        include "base-top.php";
+                        echo '<h1 class="main-text">Registration Complete</h1>';
+                        echo '<p class="main-text">Welcome to your new account. Please click the button below to access the MedHub</p>';
+                        echo '<section class="d-flex justify-content-center mt-5">';
+                        echo '<a class="blue-button me-3" href="medhub.php">MedHub</a>';
+                        echo '</section>';
+                    }   
+                }
             }
+        } else {
+            redirectToIndex();
         }
         else {
-            header("Location: index.php");
-            exit();
+            redirectToIndex();
         }
     }
     else {
