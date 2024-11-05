@@ -69,12 +69,13 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-include "base-top.php";
-
 if (isset($_SESSION["user_id"])) { // If the user is logged in, load MedHub. If not, the login form.
-    include "medhub-section.php";
     $pagename = "medhub";
+    include "base-top.php";
+    include "medhub-section.php";
 } else {
+    $pagename = "login";
+    include "base-top.php";
     echo '<p id="register-alert">Incorrect username/password entered</p>';
     include "login-section.php";
     $pagename = "login";
