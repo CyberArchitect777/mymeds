@@ -1,7 +1,7 @@
 <?php 
 
-$pagename = "register"; 
-$_SESSION["register-token"] = random_int(10000000, 99999999);
+$pagename = "register"; // Section identification for user display
+$_SESSION["register-token"] = random_int(10000000, 99999999); // Calculate a login token for use in PHP source authentication
 ?>
 
 <h1 class="main-text">Register</h1>

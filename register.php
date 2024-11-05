@@ -1,4 +1,5 @@
 <?php 
+// Custom PHP templating
 include "session-code.php";
 $pagename = "register";
 include "base-top.php"; 

@@ -4,6 +4,7 @@
     <p class="main-text">Please choose an option below to continue</p>
     <section class="d-flex justify-content-center mt-5">
         <?php 
+        // If user_id detected, show logged in elements. Otherwise, show logged out elements
         if (isset($_SESSION["user_id"])) {
             echo '
             <a class="blue-button me-3" href="medhub.php">MedHub</a>

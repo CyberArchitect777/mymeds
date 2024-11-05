@@ -1,7 +1,7 @@
 <?php
 
-include "session-code.php";
-include "utility.php";
+include "session-code.php"; // Start new session if one hasn't been
+include "utility.php"; // Utility class containing stand-alone functions useful in all code
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["token"] == $_SESSION["logout-token"]) {

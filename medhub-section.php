@@ -4,7 +4,7 @@ include "session-code.php";
 
 $pagename = "medhub";
 
-$drugs_output = "";
+$drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
 try {
 
@@ -22,15 +22,16 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $current_id = $_SESSION["user_id"];
+    // Pull all medication from the database for the logged in user
     $drugs_pull = $pdo->prepare("SELECT * FROM medication WHERE user_id = :current_id GROUP BY medication.medication_id");
     $drugs_pull->execute(["current_id" => $current_id]);
-    $first_row = $drugs_pull->fetch(PDO::FETCH_ASSOC);
+    $first_row = $drugs_pull->fetch(PDO::FETCH_ASSOC); // Pull first row only just to check there is an initial record
     if ($first_row == false) {
         $drugs_output = '<p class="main-text">No medication is on record</p>';
     } else {
         $drugs_output = "<ul>";
         $drugs_output .= "<li class='rowdata'>" . $first_row["medication_name"] . " - " . $first_row["dosage"] . "</li>";
-        while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) {
+        while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
             $medication_name = $more_rows['medication_name'];
             $medication_dosage = $more_rows['dosage'];
             $drugs_output .= "<li class='rowdata'>" . $medication_name . " - " . $medication_dosage . "</li>";
@@ -51,6 +52,6 @@ try {
         <div class="d-flex justify-content-center align-items-center">
             <a class="d-flex justify-content-center align-items-center blue-button large-button" href="addmed.php">Add Medication</a>
         </div>
-        <?php echo $drugs_output; ?>
+        <?php echo $drugs_output; // Output HTML code generated in the above section ?>
     </section>
 </main>

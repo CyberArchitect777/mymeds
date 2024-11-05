@@ -1,5 +1,7 @@
 <?php
 
+// Include files to generate webpage: ensure session is started then include header, main and footer HTML sections.
+
 include "session-code.php";
 
 $pagename = "medhub"; 
