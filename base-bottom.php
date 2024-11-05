@@ -1,4 +1,3 @@
-</main>
 <footer>
         <p class="py-2 my-auto text-center">Created by Barrie Millar (2024)</p>
     </footer>
