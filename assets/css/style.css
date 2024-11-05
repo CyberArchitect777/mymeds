@@ -119,8 +119,12 @@ header .nav-link, header .navbar-brand {
 
 .rowdata {
     color: white;
-    text-align: center;
+    text-align: start;
     list-style: none;
+}
+
+#druglist {
+    max-width: 500px;
 }
 
 /* Footer styles */
