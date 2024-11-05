@@ -45,13 +45,11 @@ try {
 
 ?>
 
-<main>
-    <h1 class="main-text">Welcome to your MedHub</h1>
-    <h2 class="main-text">You can manage your medication below</h2>
-    <section id="drugs-display" class="mx-auto mt-5">
-        <div class="d-flex justify-content-center align-items-center">
-            <a class="d-flex justify-content-center align-items-center blue-button large-button" href="addmed.php">Add Medication</a>
-        </div>
-        <?php echo $drugs_output; // Output HTML code generated in the above section ?>
-    </section>
-</main>
+<h1 class="main-text">Welcome to your MedHub</h1>
+<h2 class="main-text">You can manage your medication below</h2>
+<section id="drugs-display" class="mx-auto mt-5">
+    <div class="d-flex justify-content-center align-items-center">
+        <a class="d-flex justify-content-center align-items-center blue-button large-button" href="addmed.php">Add Medication</a>
+    </div>
+    <?php echo $drugs_output; // Output HTML code generated in the above section ?>
+</section>
