@@ -117,6 +117,10 @@ header .nav-link, header .navbar-brand {
 
 /* MedHub styles */
 
+.card-title {
+    color: yellow;
+}
+
 .card {
     width: 300px;
     background-color: darkblue;
