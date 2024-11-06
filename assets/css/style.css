@@ -117,14 +117,11 @@ header .nav-link, header .navbar-brand {
 
 /* MedHub styles */
 
-.rowdata {
+.card {
+    width: 300px;
+    background-color: darkblue;
+    margin: 10px;
     color: white;
-    text-align: start;
-    list-style: none;
-}
-
-#druglist {
-    max-width: 500px;
 }
 
 /* Footer styles */

@@ -6,6 +6,21 @@ $pagename = "medhub";
 
 $drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
+function returnCard($name, $dosage) {
+    return '
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">' . $name . '</h5>
+                <p class="card-text text-center">Dosage: ' . $dosage . '</p>
+                <div class="d-flex justify-content-between">
+                    <a href="#" class="btn btn-primary">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    ';
+}
+
 try {
 
     // Connect to the database
@@ -29,16 +44,14 @@ try {
     if ($first_row == false) {
         $drugs_output = '<p class="main-text">No medication is on record</p>';
     } else {
-        $drugs_output = "<div class='d-flex justify-content-center'><ul>";
-        $drugs_output .= "<li class='rowdata'>" . "Medication: " . $first_row["medication_name"] . " - Dose: " . $first_row["dosage"] . "</li>";
+        $drugs_output .= '<div class="d-flex justify-content-center">' . returnCard($first_row["medication_name"], $first_row["dosage"]);
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
             $medication_name = $more_rows['medication_name'];
             $medication_dosage = $more_rows['dosage'];
-            $drugs_output .= "<li class='rowdata'>" . "Medication: " . $medication_name . " - Dose: " . $medication_dosage . "</li>";
+            $drugs_output .= returnCard($more_rows['medication_name'], $more_rows['dosage']);
         }
-        $drugs_output .= "</ul></div>";
+        $drugs_output .= "</div>";
     }
-    
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
