@@ -6,12 +6,29 @@ $pagename = "medhub";
 
 $drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
-function returnCard($name, $dosage) {
+function returnCard($name, $dosage, $frequency_type, $frequency_number, $last_taken) {
+    $frequency_text = "";
+    switch($frequency_type) {
+        case 0:
+            $frequency_text = "hours";
+            break;
+        case 1:
+            $frequency_text = "days";
+            break;
+        case 2:
+            $frequency_text = "weeks";
+            break;
+        case 3:
+            $frequency_text = "months";
+            break;
+    }
     return '
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title text-center">' . $name . '</h5>
                 <p class="card-text text-center">Dosage: ' . $dosage . '</p>
+                <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
+                <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
                 <div class="d-flex justify-content-between">
                     <a href="#" class="btn btn-primary">Edit</a>
                     <a href="#" class="btn btn-danger">Delete</a>
@@ -44,11 +61,9 @@ try {
     if ($first_row == false) {
         $drugs_output = '<p class="main-text">No medication is on record</p>';
     } else {
-        $drugs_output .= '<div class="d-flex justify-content-center">' . returnCard($first_row["medication_name"], $first_row["dosage"]);
+        $drugs_output .= '<div class="d-flex justify-content-center flex-flow">' . returnCard($first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
-            $medication_name = $more_rows['medication_name'];
-            $medication_dosage = $more_rows['dosage'];
-            $drugs_output .= returnCard($more_rows['medication_name'], $more_rows['dosage']);
+            $drugs_output .= returnCard($more_rows['medication_name'], $more_rows['dosage'], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"]);
         }
         $drugs_output .= "</div>";
     }
