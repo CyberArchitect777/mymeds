@@ -61,7 +61,7 @@ try {
     if ($first_row == false) {
         $drugs_output = '<p class="main-text">No medication is on record</p>';
     } else {
-        $drugs_output .= '<div class="d-flex justify-content-center flex-flow">' . returnCard($first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
+        $drugs_output .= '<div class="d-flex justify-content-center flex-wrap">' . returnCard($first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
             $drugs_output .= returnCard($more_rows['medication_name'], $more_rows['dosage'], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"]);
         }
