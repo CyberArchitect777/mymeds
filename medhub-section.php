@@ -6,21 +6,24 @@ $pagename = "medhub";
 
 $drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
-function returnCard($name, $dosage, $frequency_type, $frequency_number, $last_taken) {
+function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_number, $last_taken) {
     $frequency_text = "";
     switch($frequency_type) {
         case 0:
-            $frequency_text = "hours";
+            $frequency_text = "hour";
             break;
         case 1:
-            $frequency_text = "days";
+            $frequency_text = "day";
             break;
         case 2:
-            $frequency_text = "weeks";
+            $frequency_text = "week";
             break;
         case 3:
-            $frequency_text = "months";
+            $frequency_text = "month";
             break;
+    }
+    if ($frequency_number > 1) {
+            $frequency_text .= "s";
     }
     return '
         <div class="card">
@@ -29,11 +32,12 @@ function returnCard($name, $dosage, $frequency_type, $frequency_number, $last_ta
                 <p class="card-text text-center">Dosage: ' . $dosage . '</p>
                 <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
                 <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
-                <div class="d-flex justify-content-between">
-                    <a href="#" class="btn btn-success">Medicine Taken</a>
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
-                </div>
+                <form class="d-flex justify-content-between" method="POST" action="medhub-process.php">
+                    <input type="hidden" name="formid' . (string)$medication_id . '" id="formid' . (string)$medication_id . '" value="formid' . (string)$medication_id . '">
+                    <input type="submit" name="medboxbutton" value="Medicine Taken" class="btn btn-success">
+                    <input type="submit" name="medboxbutton" value="Edit" class="btn btn-primary">
+                    <input type="submit" name="medboxbutton" value="Delete" class="btn btn-danger">
+                </form>
             </div>
         </div>
     ';
@@ -62,9 +66,9 @@ try {
     if ($first_row == false) {
         $drugs_output = '<p class="main-text">No medication is on record</p>';
     } else {
-        $drugs_output .= '<div class="d-flex justify-content-center flex-wrap mb-4">' . returnCard($first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
+        $drugs_output .= '<div class="d-flex justify-content-center flex-wrap mb-4">' . returnCard($first_row["medication_id"], $first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
-            $drugs_output .= returnCard($more_rows['medication_name'], $more_rows['dosage'], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"]);
+            $drugs_output .= returnCard($more_row["medication_id"], $more_rows['medication_name'], $more_rows['dosage'], $more_rows["frequency_type"], $more_rows["frequency_number"], $more_rows["last_taken"]);
         }
         $drugs_output .= "</div>";
     }
