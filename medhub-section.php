@@ -6,6 +6,9 @@ $pagename = "medhub";
 
 $drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
+// Create a random token for form verification later
+$_SESSION["medhub-token"] = random_int(10000000, 99999999);
+
 function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_number, $last_taken) {
     $frequency_text = "";
     switch($frequency_type) {
@@ -36,10 +39,11 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
                 <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
                 <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
                 <form class="d-flex justify-content-between" method="POST" action="medhub-process.php">
+                    <input type="hidden" name="token" value="' . $_SESSION["medhub-token"] . '">
                     <input type="submit" name="medboxbutton" value="Medicine Taken" class="btn btn-success">
                     <input type="submit" name="medboxbutton" value="Edit" class="btn btn-primary">
                     <input type="submit" name="medboxbutton" value="Delete" class="btn btn-danger">
-                    <input type="hidden" name="formid' . (string)$medication_id . '" id="formid' . (string)$medication_id . '" value="formid' . (string)$medication_id . '">
+                    <input type="hidden" name="medboxid" id="medboxid" value="medboxid' . (string)$medication_id . '">
                 </form>
             </div>
         </div>
