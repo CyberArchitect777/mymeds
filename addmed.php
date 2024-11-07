@@ -2,13 +2,14 @@
 include "session-code.php";
 $pagename = "medhub";
 include "base-top.php";
+include "page-alert.html";
 // Create a random token for form verification later
 $_SESSION["addmed-token"] = random_int(10000000, 99999999);
 ?>
 
 <h1 class="main-text">Add Medication</h1>
 <p class="main-text">Please enter details below to add a medicine to your profile.</p>
-<form id="login" method="POST" action="addmed-process.php">
+<form id="addmed" onsubmit="return addMedFormCheck()" method="POST" action="addmed-process.php" class="mainform">
     <!-- Hidden form token to verify in PHP code later that the request came from this form -->
     <input type="hidden" name="token" value="<?php echo $_SESSION["addmed-token"] ?>">
     <label for="username">Medication Name:</label>

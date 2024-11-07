@@ -33,10 +33,10 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
                 <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
                 <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
                 <form class="d-flex justify-content-between" method="POST" action="medhub-process.php">
-                    <input type="hidden" name="formid' . (string)$medication_id . '" id="formid' . (string)$medication_id . '" value="formid' . (string)$medication_id . '">
                     <input type="submit" name="medboxbutton" value="Medicine Taken" class="btn btn-success">
                     <input type="submit" name="medboxbutton" value="Edit" class="btn btn-primary">
                     <input type="submit" name="medboxbutton" value="Delete" class="btn btn-danger">
+                    <input type="hidden" name="formid' . (string)$medication_id . '" id="formid' . (string)$medication_id . '" value="formid' . (string)$medication_id . '">
                 </form>
             </div>
         </div>
@@ -68,7 +68,7 @@ try {
     } else {
         $drugs_output .= '<div class="d-flex justify-content-center flex-wrap mb-4">' . returnCard($first_row["medication_id"], $first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
-            $drugs_output .= returnCard($more_row["medication_id"], $more_rows['medication_name'], $more_rows['dosage'], $more_rows["frequency_type"], $more_rows["frequency_number"], $more_rows["last_taken"]);
+            $drugs_output .= returnCard($more_rows["medication_id"], $more_rows["medication_name"], $more_rows["dosage"], $more_rows["frequency_type"], $more_rows["frequency_number"], $more_rows["last_taken"]);
         }
         $drugs_output .= "</div>";
     }

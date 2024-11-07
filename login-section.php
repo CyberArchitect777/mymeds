@@ -2,8 +2,8 @@
 
 <h1 class="main-text">Login</h1>
 <p class="main-text">Please log in to your account using the form below.</p>
-<form id="login" method="POST" action="login-process.php">
-    <input type="hidden" name="token" value="<?php echo $_SESSION["login-token"] ?>">
+<form id="login" method="POST" action="login-process.php" class="mainform">
+    <input type="hidden" name="token" value="<?php echo $_SESSION["login-token"] ?>" class="mainform">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
     <label for="password">Password:</label>

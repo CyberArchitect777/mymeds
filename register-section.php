@@ -6,7 +6,7 @@ $_SESSION["register-token"] = random_int(10000000, 99999999); // Calculate a log
 
 <h1 class="main-text">Register</h1>
 <p class="main-text">Please register for a new account using the form below.</p>
-<form id="register" onsubmit="return registerFormCheck()" method="POST" action="register-process.php">
+<form id="register" onsubmit="return registerFormCheck()" method="POST" action="register-process.php" class="mainform">
     <input type="hidden" name="token" value="<?php echo $_SESSION["register-token"] ?>">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
