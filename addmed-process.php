@@ -27,7 +27,7 @@ try {
                 
             // Insert the medication form data into the database
 
-            $medication_add = $pdo->prepare("INSERT INTO medication (medication_name, dosage, user_id, frequency_type, frequency_number) VALUES (:medname, :med_dosage, :user_id, :frequency_number, :frequency_type);");
+            $medication_add = $pdo->prepare("INSERT INTO medication (medication_name, dosage, user_id, frequency_number, frequency_type) VALUES (:medname, :med_dosage, :user_id, :frequency_number, :frequency_type);");
             $medication_add->execute(["medname" => $med_name, "med_dosage" => $med_dosage, "user_id" => $_SESSION["user_id"], "frequency_number" => $frequency_number, "frequency_type" => $frequency_type]);
         } else {
             redirectToIndex(); // If the form is not where the request came from, redirect to index

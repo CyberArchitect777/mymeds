@@ -21,8 +21,11 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
         case 3:
             $frequency_text = "month";
             break;
+        case 4:
+            $frequency_text = "year";
+            break;
     }
-    if ($frequency_number > 1) {
+    if ($frequency_number != 1) {
             $frequency_text .= "s";
     }
     return '
