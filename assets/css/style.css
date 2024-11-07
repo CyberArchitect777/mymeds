@@ -108,7 +108,7 @@ header .nav-link, header .navbar-brand {
     width: 100%;
 }
 
-#register-alert {
+#page-alert {
     width: 100%;
     background-color: red;
     color: white;

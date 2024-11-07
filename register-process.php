@@ -33,7 +33,7 @@ try {
                 $confirm_password = $_POST["confirm-password"];
                 if ($new_password !== $confirm_password) {
                     include "base-top.php";
-                    echo "<p id='register-alert'>Passwords don't match. Please try again</p>";
+                    echo "<p id='page-alert'>Passwords don't match. Please try again</p>";
                     include "register-section.php";
                 } else {
                     
@@ -46,7 +46,7 @@ try {
                     if ($username_count > 0) {
                         // Use custom templating approach to inform the user that the username already exists
                         include "base-top.php";
-                        echo "<p class='text-white' id='register-alert'>Username already exists</p>";
+                        echo "<p class='text-white' id='page-alert'>Username already exists</p>";
                         include "register-section.php";
                     } else {
                         #PASSWORD_DEFAULT selects the most up to date hashing algorithm

@@ -2,7 +2,7 @@
 function registerFormCheck() {
     let passwordOne = document.getElementById("password");
     let passwordTwo = document.getElementById("confirm-password");
-    let registerAlert = document.getElementById("register-alert");
+    let registerAlert = document.getElementById("page-alert");
     if (passwordOne.value !== passwordTwo.value) {
         registerAlert.classlist.remove("hide");
         registerAlert.innerText = "Passwords don't match. Please try again";

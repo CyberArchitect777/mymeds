@@ -76,7 +76,7 @@ if (isset($_SESSION["user_id"])) { // If the user is logged in, load MedHub. If 
 } else {
     $pagename = "login";
     include "base-top.php";
-    echo '<p id="register-alert">Incorrect username/password entered</p>';
+    echo '<p id="page-alert">Incorrect username/password entered</p>';
     include "login-section.php";
     $pagename = "login";
 }
