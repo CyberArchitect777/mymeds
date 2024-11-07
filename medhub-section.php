@@ -30,6 +30,7 @@ function returnCard($name, $dosage, $frequency_type, $frequency_number, $last_ta
                 <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
                 <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
                 <div class="d-flex justify-content-between">
+                    <a href="#" class="btn btn-success">Medicine Taken</a>
                     <a href="#" class="btn btn-primary">Edit</a>
                     <a href="#" class="btn btn-danger">Delete</a>
                 </div>
