@@ -4,50 +4,50 @@ include "session-code.php";
 
 $pagename = "medhub";
 
-$drugs_output = ""; // Variable to hold HTML information for output to webpage.
+//$drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
 // Create a random token for form verification later
-$_SESSION["medhub-token"] = random_int(10000000, 99999999);
+//$_SESSION["medhub-token"] = random_int(10000000, 99999999);
 
-function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_number, $last_taken) {
-    $frequency_text = "";
-    switch($frequency_type) {
-        case 0:
-            $frequency_text = "hour";
-            break;
-        case 1:
-            $frequency_text = "day";
-            break;
-        case 2:
-            $frequency_text = "week";
-            break;
-        case 3:
-            $frequency_text = "month";
-            break;
-        case 4:
-            $frequency_text = "year";
-            break;
+$all_drugs_to_take = array(); // Array to hold all upcoming medication requirements
+
+function populateMedicationSchedule($all_drugs_to_take) {
+    $full_medication_schedule = array();
+    foreach ($all_drugs_to_take as $single_drug) {
+        if ($single_drug["last_taken"] = "") {
+            $single_drug["last_taken"] = time();
+        }
+        $finish_flag = false;
+        array_push($full_medication_schedule, $single_drug);
+        $start_time = $single_drug["last_taken"];
+        if ($single_drug["next_dose"] = "") {
+            $single_drug["next_dose"] = $single_drug["last_taken"];
+        }
+        while ($finish_flag == true) {
+            switch($single_drug["frequency_type"]) {
+                case 0:
+                    $single_drug["next_dose"] += 3600;
+                    break;
+                case 1:
+                    $single_drug["next_dose"] += 86400;
+                    break;
+                case 2:
+                    $single_drug["next_dose"] += 604800;
+                    break;
+                case 3:
+                    $single_drug["next_dose"] = strtotime("+1 month", $single_drug["next_dose"]);
+                    break;
+                case 4:
+                    $single_drug["next_dose"] = strtotime("+1 year", $single_drug["next_dose"]);
+                    break;
+            }
+            array_push($full_medication_schedule, $single_drug);
+            if ($start_time < strtotime("-7 days", $single_drug["next_dose"])) {
+                $finish_flag = true;
+            }
+        }
     }
-    if ($frequency_number != 1) {
-            $frequency_text .= "s";
-    }
-    return '
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title text-center mb-4">' . $name . '</h5>
-                <p class="card-text text-center">Dosage: ' . $dosage . '</p>
-                <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
-                <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
-                <form class="d-flex justify-content-between" method="POST" action="medhub-process.php">
-                    <input type="hidden" name="token" value="' . $_SESSION["medhub-token"] . '">
-                    <input type="submit" name="medboxbutton" value="Medicine Taken" class="btn btn-success">
-                    <input type="submit" name="medboxbutton" value="Edit" class="btn btn-primary">
-                    <input type="submit" name="medboxbutton" value="Delete" class="btn btn-danger">
-                    <input type="hidden" name="medboxid" id="medboxid" value="medboxid' . (string)$medication_id . '">
-                </form>
-            </div>
-        </div>
-    ';
+    return $full_medication_schedule;
 }
 
 try {
@@ -71,13 +71,17 @@ try {
     $drugs_pull->execute(["current_id" => $current_id]);
     $first_row = $drugs_pull->fetch(PDO::FETCH_ASSOC); // Pull first row only just to check there is an initial record
     if ($first_row == false) {
-        $drugs_output = '<p class="main-text">No medication is on record</p>';
+        $drugs_output = '<p class="main-text">No medication schedule is on record</p>';
     } else {
-        $drugs_output .= '<div class="d-flex justify-content-center flex-wrap mb-4">' . returnCard($first_row["medication_id"], $first_row["medication_name"], $first_row["dosage"], $first_row["frequency_type"], $first_row["frequency_number"], $first_row["last_taken"] );
+        $first_drug = array("medication_name" => $first_row["medication_name"], "dosage" => $first_row["dosage"], "frequency_type" => $first_row["frequency_number"], "last_taken" => $first_row["last_taken"]);
+        array_push($all_drugs_to_take, $first_drug);
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
-            $drugs_output .= returnCard($more_rows["medication_id"], $more_rows["medication_name"], $more_rows["dosage"], $more_rows["frequency_type"], $more_rows["frequency_number"], $more_rows["last_taken"]);
+            $more_drugs = array("medication_name" => $more_row["medication_name"], "dosage" => $more_row["dosage"], "frequency_type" => $more_row["frequency_number"], "last_taken" => $more_row["last_taken"]);
+            array_push($all_drugs_to_take, $more_drugs);
         }
-        $drugs_output .= "</div>";
+        $medication_schedule = populateMedicationSchedule($all_drugs_to_take);
+        foreach ($medication_schedule as $medication_dose) {
+        }
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -89,7 +93,7 @@ try {
 <h2 class="main-text">You can manage your medication below</h2>
 <section id="drugs-display" class="mx-auto mt-5">
     <div class="d-flex justify-content-center align-items-center mb-5">
-        <a class="d-flex justify-content-center align-items-center blue-button large-button" href="addmed.php">Add Medication</a>
+        <a class="d-flex justify-content-center align-items-center blue-button large-button" href="managemeds.php">Manage Medication</a>
     </div>
     <?php echo $drugs_output; // Output HTML code generated in the above section ?>
 </section>
