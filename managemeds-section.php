@@ -32,6 +32,29 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
             $frequency_text .= "s";
     }
     return '
+        <!-- Delete medication item modal -->
+        <section class="modal" id="delete-med-item" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Medication Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">Are you sure you want to delete this medication item?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- PHP performs the delete function if yes is pressed -->
+                        <form class="mx-auto" action="deletemed-process.php" method="POST">
+                            <input type="hidden" name="token" value="' . $_SESSION["managemeds-token"] . '">
+                            <input type="hidden" name="medboxid" id="medboxid" value="medboxid' . (string)$medication_id . '">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Yes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title text-center mb-4">' . $name . '</h5>
@@ -40,8 +63,8 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
                 <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
                 <form class="d-flex justify-content-between" method="POST" action="managemeds-process.php">
                     <input type="hidden" name="token" value="' . $_SESSION["managemeds-token"] . '">
-                    <input type="submit" name="medboxbutton" value="Edit" class="btn btn-primary">
-                    <input type="submit" name="medboxbutton" value="Delete" class="btn btn-danger">
+                    <input type="submit" name="medboxbutton" value="Edit" class="btn btn-success">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#delete-med-item" class="btn btn-danger">Delete</a>
                     <input type="hidden" name="medboxid" id="medboxid" value="medboxid' . (string)$medication_id . '">
                 </form>
             </div>
