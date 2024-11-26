@@ -4,7 +4,7 @@ include "session-code.php";
 
 $pagename = "medhub";
 
-//$drugs_output = ""; // Variable to hold HTML information for output to webpage.
+$drugs_output = ""; // Variable to hold HTML information for output to webpage.
 
 // Create a random token for form verification later
 //$_SESSION["medhub-token"] = random_int(10000000, 99999999);
@@ -14,25 +14,25 @@ $all_drugs_to_take = array(); // Array to hold all upcoming medication requireme
 function populateMedicationSchedule($all_drugs_to_take) {
     $full_medication_schedule = array();
     foreach ($all_drugs_to_take as $single_drug) {
-        if ($single_drug["last_taken"] = "") {
+        if (is_null($single_drug["last_taken"])) {
             $single_drug["last_taken"] = time();
         }
         $finish_flag = false;
-        array_push($full_medication_schedule, $single_drug);
         $start_time = $single_drug["last_taken"];
-        if ($single_drug["next_dose"] = "") {
+        if (! isset($single_drug["next_dose"])) {
             $single_drug["next_dose"] = $single_drug["last_taken"];
         }
+        array_push($full_medication_schedule, $single_drug);
         while ($finish_flag == true) {
             switch($single_drug["frequency_type"]) {
                 case 0:
-                    $single_drug["next_dose"] += 3600;
+                    $single_drug["next_dose"] += 3600; // Add an hour in seconds
                     break;
                 case 1:
-                    $single_drug["next_dose"] += 86400;
+                    $single_drug["next_dose"] += 86400; // Add a day in seconds
                     break;
                 case 2:
-                    $single_drug["next_dose"] += 604800;
+                    $single_drug["next_dose"] += 604800; // Add a week in seconds
                     break;
                 case 3:
                     $single_drug["next_dose"] = strtotime("+1 month", $single_drug["next_dose"]);
@@ -76,12 +76,18 @@ try {
         $first_drug = array("medication_name" => $first_row["medication_name"], "dosage" => $first_row["dosage"], "frequency_type" => $first_row["frequency_number"], "last_taken" => $first_row["last_taken"]);
         array_push($all_drugs_to_take, $first_drug);
         while ($more_rows = $drugs_pull->fetch(PDO::FETCH_ASSOC)) { // Go through all remaining rows
-            $more_drugs = array("medication_name" => $more_row["medication_name"], "dosage" => $more_row["dosage"], "frequency_type" => $more_row["frequency_number"], "last_taken" => $more_row["last_taken"]);
+            $more_drugs = array("medication_name" => $more_rows["medication_name"], "dosage" => $more_rows["dosage"], "frequency_type" => $more_rows["frequency_number"], "last_taken" => $more_rows["last_taken"]);
             array_push($all_drugs_to_take, $more_drugs);
         }
         $medication_schedule = populateMedicationSchedule($all_drugs_to_take);
+        // Sorts the array using the function. The spaceship operator returns -1 if value_a is smaller than value_b. 
+        // 0 if they are the same and 1 if value_b is smaller than value_a. Usort then sorts the array by next_dose
+        usort($medication_schedule, function ($value_one, $value_two) { return $value_one["next_dose"] <=> $value_two["next_dose"]; });
+        $drugs_output .= "<ul id='med-schedule'>";
         foreach ($medication_schedule as $medication_dose) {
+            $drugs_output .= "<li class='fg-white'>" . $medication_dose["medication_name"] . " - " . $medication_dose["next_dose"] . "</li>";
         }
+        $drugs_output .= "</ul>";
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -95,5 +101,6 @@ try {
     <div class="d-flex justify-content-center align-items-center mb-5">
         <a class="d-flex justify-content-center align-items-center blue-button large-button" href="managemeds.php">Manage Medication</a>
     </div>
+    <h3 class="text-center fg-white mb-4">Medication Schedule</h3>
     <?php echo $drugs_output; // Output HTML code generated in the above section ?>
 </section>

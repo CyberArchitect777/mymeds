@@ -116,6 +116,14 @@ header .nav-link, header .navbar-brand {
 
 /* MedHub styles */
 
+#med-schedule {
+    list-style: none;
+    text-align: center;
+    padding-left: 0;
+}
+
+/* Manage medication styles */
+
 .card-title {
     color: yellow;
 }
