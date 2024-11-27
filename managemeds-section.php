@@ -33,7 +33,7 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
     }
     return '
         <!-- Delete medication item modal -->
-        <section class="modal" id="delete-med-item" tabindex="-1">
+        <section class="modal" id="delete-med-item' . (string)$medication_id . '" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -64,7 +64,7 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
                 <form class="mt-4 d-flex justify-content-between" method="POST" action="managemeds-process.php">
                     <input type="hidden" name="token" value="' . $_SESSION["managemeds-token"] . '">
                     <input type="submit" name="medboxbutton" value="Edit" class="btn-fixed-width btn btn-success">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#delete-med-item" class="btn-fixed-width btn btn-danger">Delete</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#delete-med-item' . (string)$medication_id . '" class="btn-fixed-width btn btn-danger">Delete</a>
                     <input type="hidden" name="medboxid" id="medboxid" value="medboxid' . (string)$medication_id . '">
                 </form>
             </div>
