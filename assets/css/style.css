@@ -55,6 +55,10 @@ input[type="submit"], input[type="reset"] {
     text-align: center;
 }
 
+.btn-fixed-width {
+    width: 80px;
+}
+
 /* Utility classes */
 
 .hide {

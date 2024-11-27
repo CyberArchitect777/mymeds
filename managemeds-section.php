@@ -61,10 +61,10 @@ function returnCard($medication_id, $name, $dosage, $frequency_type, $frequency_
                 <p class="card-text text-center">Dosage: ' . $dosage . '</p>
                 <p class="card-text text-center">Taken Every: ' . (string)$frequency_number . " " . $frequency_text . '</p>
                 <p class="card-text text-center">Last Taken: ' . ($last_taken == "" ? "Not known" : $last_taken) . '</p>
-                <form class="d-flex justify-content-between" method="POST" action="managemeds-process.php">
+                <form class="mt-4 d-flex justify-content-between" method="POST" action="managemeds-process.php">
                     <input type="hidden" name="token" value="' . $_SESSION["managemeds-token"] . '">
-                    <input type="submit" name="medboxbutton" value="Edit" class="btn btn-success">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#delete-med-item" class="btn btn-danger">Delete</a>
+                    <input type="submit" name="medboxbutton" value="Edit" class="btn-fixed-width btn btn-success">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#delete-med-item" class="btn-fixed-width btn btn-danger">Delete</a>
                     <input type="hidden" name="medboxid" id="medboxid" value="medboxid' . (string)$medication_id . '">
                 </form>
             </div>
